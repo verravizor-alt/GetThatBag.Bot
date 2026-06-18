@@ -1,0 +1,17 @@
+{
+  "name": "getthatbag-openclaw-agent",
+  "version": "1.0.0",
+  "description": "GetThatBag LLC — OpenClaw AI agent for 24/7 outreach automation",
+  "private": true,
+  "scripts": {
+    "start": "openclaw gateway --port ${PORT:-18789}",
+    "setup": "openclaw onboard --skip-interactive",
+    "health": "curl -fsS http://localhost:${PORT:-18789}/healthz"
+  },
+  "dependencies": {
+    "openclaw": "latest"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

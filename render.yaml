@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: getthatbag-openclaw
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm install -g openclaw@latest
+    startCommand: openclaw gateway --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      # LLM API Keys — set these in Render Dashboard after deploy
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      # Slack integration
+      - key: SLACK_BOT_TOKEN
+        sync: false
+      - key: OWNER_SLACK_ID
+        sync: false
+      # Telegram integration (set after creating bot at t.me/BotFather)
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      # OpenClaw config path
+      - key: OPENCLAW_CONFIG_PATH
+        value: /app/openclaw.json
+      # Disable Bonjour on Linux
+      - key: OPENCLAW_DISABLE_BONJOUR
+        value: "1"
+      # Skip interactive onboarding on first boot
+      - key: OPENCLAW_SKIP_ONBOARDING
+        value: "1"
+      # GetThatBag site webhook URL
+      - key: GETTHATBAG_WEBHOOK_URL
+        value: https://getthatbagllc.manus.space/api/scheduled/outreach-batch
