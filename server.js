@@ -262,6 +262,22 @@ function startScheduler() {
   console.log("[Scheduler] Starting 2-hour outreach batch cycle");
   setInterval(runOutreachBatch, TWO_HOURS);
 
+  // Self-ping every 14 minutes to keep Render free tier awake
+  // Render sleeps after 15 min of inactivity — this prevents that at zero cost
+  const FOURTEEN_MIN = 14 * 60 * 1000;
+  const selfUrl = process.env.RENDER_EXTERNAL_URL
+    ? `${process.env.RENDER_EXTERNAL_URL}/healthz`
+    : `http://localhost:${PORT}/healthz`;
+  setInterval(async () => {
+    try {
+      const res = await fetch(selfUrl);
+      console.log(`[Keepalive] Self-ping OK — ${res.status} (${new Date().toISOString()})`);
+    } catch (err) {
+      console.warn(`[Keepalive] Self-ping failed: ${err.message}`);
+    }
+  }, FOURTEEN_MIN);
+  console.log(`[Keepalive] Self-ping every 14 min → ${selfUrl}`);
+
   // Schedule morning briefing
   scheduleMorningBriefing();
 
