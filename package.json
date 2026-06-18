@@ -1,17 +1,19 @@
 {
-  "name": "getthatbag-openclaw-agent",
+  "name": "getthatbag-ai-agent",
   "version": "1.0.0",
-  "description": "GetThatBag LLC — OpenClaw AI agent for 24/7 outreach automation",
+  "description": "GetThatBag LLC — 24/7 AI outreach agent (Groq + Gemini + Slack + Telegram)",
   "private": true,
+  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "start": "openclaw gateway --port ${PORT:-18789}",
-    "install-openclaw": "npm install -g openclaw@latest",
-    "health": "curl -fsS http://localhost:${PORT:-18789}/healthz"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "dependencies": {
-    "openclaw": "latest"
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
   },
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=18.0.0"
   }
 }
