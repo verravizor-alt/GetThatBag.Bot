@@ -4,8 +4,9 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g openclaw@latest
-    startCommand: openclaw gateway --port $PORT
+    # Use npm install (local dep) so openclaw binary is in node_modules/.bin
+    buildCommand: npm install
+    startCommand: npx openclaw gateway --port $PORT
     healthCheckPath: /healthz
     envVars:
       # LLM API Keys — set these in Render Dashboard after deploy
@@ -35,3 +36,6 @@ services:
       # GetThatBag site webhook URL
       - key: GETTHATBAG_WEBHOOK_URL
         value: https://getthatbagllc.manus.space/api/scheduled/outreach-batch
+      # Force Node 22
+      - key: NODE_VERSION
+        value: "22.19.0"

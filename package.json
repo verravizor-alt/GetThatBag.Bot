@@ -5,13 +5,13 @@
   "private": true,
   "scripts": {
     "start": "openclaw gateway --port ${PORT:-18789}",
-    "setup": "openclaw onboard --skip-interactive",
+    "install-openclaw": "npm install -g openclaw@latest",
     "health": "curl -fsS http://localhost:${PORT:-18789}/healthz"
   },
   "dependencies": {
     "openclaw": "latest"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.19.0"
   }
 }
